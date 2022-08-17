@@ -21,8 +21,8 @@ public class BankingApp {
 		jack = new Customer("11111111110", "Jack Bauer", 1956, "jack@example.com", "555 5555");
 
 		// ctrl + space
-		Customer elsa;
-		elsa = new Customer(null, null, 0, null, null);
+		Customer meredith;
+		meredith = new Customer(null, null, 0, null, null);
 
 		// ctrl + shift + v class'ı paketler arası taşıma
 
