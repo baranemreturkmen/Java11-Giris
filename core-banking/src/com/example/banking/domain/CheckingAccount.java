@@ -23,7 +23,7 @@ public class CheckingAccount extends Account {
 	 * extend ettigim class'in alanlari private ise eger o class'a ait alanlara
 	 * sub-class uzerinden de ulasamam. Ulasmak istiyorsam eger o alanlari protected
 	 * yapmaliyim. public yaparsam her yerden erisim. Ama private yaparsam ilgili alana
-	 * base ve sub-class'lar uzerinden erisebilirim.
+	 * base ve sub-class'lar uzerinden erisemem.
 	 */
 
 	@Override

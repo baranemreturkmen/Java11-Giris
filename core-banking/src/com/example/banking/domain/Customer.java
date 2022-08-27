@@ -105,7 +105,7 @@ public class Customer {
 	}
 
 	/*
-	 * Object'den gelen toString metodunun kendisi sadece bellekteki adresi bizwe
+	 * Object'den gelen toString metodunun kendisi sadece bellekteki adresi bize
 	 * veriyordu Biz bu durumu override ettik.
 	 */
 	@Override
