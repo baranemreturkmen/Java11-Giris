@@ -44,6 +44,8 @@ public class LotteryApp {
         //Aşağıdaki seti unutursan eğer StandartLotteryService içerisinde yapman gereken setter injection'ı unutuyorsun!!!
         //lotteryService.setRandomNumberService(randomNumberService);
 
+        //dependency injection framework: spring, cdi (java ee), guice,...
+
         //lotteryService.draw(70,6,10).forEach(System.out::println);
 
         /*Java module sistemi ile amaçlanan şey Jar dosyası oluştururken modül yapısı sayesinde JVM dosyanın

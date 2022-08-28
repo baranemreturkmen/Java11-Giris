@@ -1,8 +1,8 @@
 import com.example.random.service.RandomNumberService;
 
 module com.example.lottery {
-    requires com.example.random;
-    uses RandomNumberService;
+    requires com.example.random;//Hangi modulü kullanıyor.
+    uses RandomNumberService;//Hangi interface'i kullanıyor.
 
     /*Her modülün bir işi olsun istiyoruz. Single Responsibility Principle - SRP
     * Bu prensibi hem sınıf hem modül hem de uygulama seviyesinde mikroservis mimarisinde
