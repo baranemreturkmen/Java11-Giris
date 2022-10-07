@@ -5,8 +5,11 @@
       <module fileurl="file://$PROJECT_DIR$/Java11-Giris.iml" filepath="$PROJECT_DIR$/Java11-Giris.iml" />
       <module fileurl="file://$PROJECT_DIR$/core-banking/core-banking.iml" filepath="$PROJECT_DIR$/core-banking/core-banking.iml" />
       <module fileurl="file://$PROJECT_DIR$/lottery-module/lottery-module.iml" filepath="$PROJECT_DIR$/lottery-module/lottery-module.iml" />
+      <module fileurl="file://$PROJECT_DIR$/study-char/study-char.iml" filepath="$PROJECT_DIR$/study-char/study-char.iml" />
       <module fileurl="file://$PROJECT_DIR$/study-collection-api/study-collection-api.iml" filepath="$PROJECT_DIR$/study-collection-api/study-collection-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/study-floating-point-types/study-floating-point-types.iml" filepath="$PROJECT_DIR$/study-floating-point-types/study-floating-point-types.iml" />
       <module fileurl="file://$PROJECT_DIR$/study-functional-programming/study-functional-programming.iml" filepath="$PROJECT_DIR$/study-functional-programming/study-functional-programming.iml" />
+      <module fileurl="file://$PROJECT_DIR$/study-integral-types/study-integral-types.iml" filepath="$PROJECT_DIR$/study-integral-types/study-integral-types.iml" />
     </modules>
   </component>
 </project>

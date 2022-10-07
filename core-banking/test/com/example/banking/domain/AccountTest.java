@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /*Test raporuna isimlendirme yapıyorum default olarak class ve metod ismini 
   Veriyor junit*/
@@ -37,7 +39,7 @@ class AccountTest {
 		
 	}
 	
-	@DisplayName("Creates an account object successfuly with parametric test.")
+	@DisplayName("Creates an account object successfully with parametric test.")
 	@ParameterizedTest //-> Anatasyon birer metadata olarak dusunebilirsin.
 					   //Bir nevi post-it aslinda junit okurken bu metodu parametrik test yapacagini biliyor mesela.
 					   //Declarative programming. Java 5 ile gelmis. Loosly coupling uygulama ile framework arasinda ki
@@ -65,47 +67,55 @@ class AccountTest {
 	
 	@Test
 	@DisplayName("Withdraw negative amount should return false")
-	void withdrawNegativeAmountShouldReturnFalse() {
+	void withdrawNegativeAmountShouldReturnFalse() throws InsufficientBalanceException {
 		Account account = new Account("tr1",10_000);
 		
 		/*gercekten negatif deger cekebiliyor muyuz? false firlatacak mi?*/
-		assertFalse(account.withdraw(-1.)); 
+		//assertFalse(account.withdraw(-1.));
 		
 		/*false firlatsa bile ne olur ne olmaz diye para cekmis mi diye yine 
 		 * kontrol ediyorum. Test bu sekilde daha duzgun.*/
 		assertEquals(10_000.,account.getBalance());
 	}
 	
-	@Test
+	@ParameterizedTest
+	@ValueSource(doubles = {15_000.0, 20_000.0})
 	@DisplayName("Withdraw amount greater than balance should return false")
-	void withdrawOverBalanceShouldRetunFalse() {
+	void withdrawOverBalanceShouldReturnFalse(double amount) {
 		Account account = new Account("tr1",10_000);
-		assertFalse(account.withdraw(10_001)); 
+		assertThrows(InsufficientBalanceException.class,()->account.withdraw(amount));
 		assertEquals(10_000.,account.getBalance());
 	}
 	
-	@Test
+	@ParameterizedTest
+	@ValueSource(doubles = {0.1, 1.0, 10_000.0})
 	@DisplayName("Withdraw all balance should return true")
-	void withdrawAllBalanceShouldRetunTrue() {
-		Account account = new Account("tr1",10_000);
-		assertTrue(account.withdraw(10_000)); 
+	void withdrawAllBalanceShouldReturnTrue(double balance) throws InsufficientBalanceException {
+		Account account = new Account("tr1",balance);
+		account.withdraw(balance);
 		assertEquals(0.,account.getBalance());
 	}
 	
-	@Test
+	@ParameterizedTest
+	@ValueSource(doubles = {-0.1, -1.0, -10_000.0})
 	@DisplayName("Deposit with negative amount should return false")
-	void depositeveNegativeAmountShouldRetunFalse() {
+	void depositiveNegativeAmountShouldReturnFalse(double amount) throws IllegalArgumentException{
 		Account account = new Account("tr1",10_000);
-		assertFalse(account.deposit(-1)); 
+		assertThrows(IllegalArgumentException.class,()->account.deposit(amount));
 		assertEquals(10_000,account.getBalance());
 	}
 	
-	@Test
-	@DisplayName("Deposit with negative amount should return true")
-	void depositeveNegativeAmountShouldRetunTrue() {
-		Account account = new Account("tr1",10_000);
-		assertTrue(account.deposit(1)); 
-		assertEquals(10_001,account.getBalance());
+	@ParameterizedTest
+	@CsvSource({
+			"0.0, 1.0, 1.0",
+			"0.0, 0.1, 0.1",
+			"100.0, 100.0, 200.0"
+	})
+	@DisplayName("Deposit with positive amount should return true")
+	void depositivePositiveAmountShouldReturnTrue(double balance,double amount,double newBalance) {
+		Account account = new Account("tr1",balance);
+		account.deposit(amount);
+		assertEquals(newBalance,account.getBalance());
 	}
 	
 	@Test

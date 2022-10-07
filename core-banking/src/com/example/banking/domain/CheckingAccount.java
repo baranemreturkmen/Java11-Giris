@@ -27,15 +27,16 @@ public class CheckingAccount extends Account {
 	 */
 
 	@Override
-	public boolean withdraw(double amount) {
+	public double withdraw(double amount) throws InsufficientBalanceException {
 		// TODO Auto-generated method stub
 		//validation
-		if(amount <= 0.0) return false;
+		if(amount <= 0.0) throw new IllegalArgumentException("Amount can not be negative!");
 		//business rule
-		if(amount > (balance + overdraftAmount)) return false;
+		if(amount > (balance + overdraftAmount)) throw new InsufficientBalanceException("Amount can not be larger than balance!"
+				,amount-balance-overdraftAmount);
 		//business logic
 		balance = balance - amount;
-		return true;
+		return this.balance;
 	}
 
 	/*

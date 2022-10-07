@@ -6,11 +6,13 @@ import java.util.function.Consumer;
 import com.example.banking.domain.Account;
 //com.example.banking.domain.Customer -> Sınıfın ismi fully qualify name -> paket_ismi.sınıf_ismi
 import com.example.banking.domain.Customer;
+import com.example.banking.domain.InsufficientBalanceException;
 
 //ctrl + shift + o
 public class BankingApp {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InsufficientBalanceException {
+		//Problemi nasıl çözeceğimi bilmiyorsam try-cacth yöntemine başvurmamalıyım. Metod imzasında declare etmek yeterli.
 		// TODO Auto-generated method stub
 		/*
 		 * Javada bir paketteki sınıfı başka bir pakette ki class kullanmak isterse onu
@@ -75,8 +77,29 @@ public class BankingApp {
 		 */
 
 		// ifPresent arkada nasil calisiyor???
-		jack.getAccount("tr4").ifPresent(account -> account.withdraw(1_000));
-		Consumer<Account> withdraw1k = account -> account.withdraw(1_000);
+		/*Normalde buradaki ifPresent içerisindeki yapı nasıldı?
+		* ifPresent(account -> account.withdraw(1_000))
+		* Neden böyle oldu? Çünkü lambda expression içerisinde checked exception fırlatamam.
+		* Dolayısıyla try-catch ile surround edildi. Aynı durum bir alttaki withdraw1k'da da geçerli.
+		* Yani ben lambda expression içerisinde business bir hata fırlatacak kod yazamam yazacaksam eğer try
+		* catch içerisinde yazmam gerekiyor. Bu durumu bu bloğu bir statik metod içerisine alarak aşabilirim.*/
+		jack.getAccount("tr4").ifPresent(account ->
+			/*{
+			try {
+				account.withdraw(1_000);
+			} catch (InsufficientBalanceException e) {
+				throw new RuntimeException(e);
+			}
+		}*/
+			withdraw(account,1_000)
+		);
+		Consumer<Account> withdraw1k = account -> {
+			try {
+				account.withdraw(1_000);
+			} catch (InsufficientBalanceException e) {
+				throw new RuntimeException(e);
+			}
+		};
 
 		// Consumer<Account> printAccount = account -> System.out.println(account);
 		/*
@@ -101,6 +124,14 @@ public class BankingApp {
 
 		System.out.println("Total balance: " + jack.getBalance());
 		System.out.println("Total balance8: " + jack.getBalance8());
+	}
+
+	private static void withdraw(Account account,double amount) {
+		try {
+			account.withdraw(1_000);
+		} catch (InsufficientBalanceException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
